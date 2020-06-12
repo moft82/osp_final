@@ -21,9 +21,12 @@ function mvfiles(){ # unzip and move files
 }
 
 function installing(){ # install python3-pip, curl, bs4 and so on
-    echo "update and upgrade..."
-    sudo apt-get update
-    sudo apt-get upgrade
+    read -p "Do you want to update and upgrade packages? (y/n)? : " answer #check if update and upgrade package
+    if [ $answer = 'y' ]; then
+        echo "update and upgrade..."
+        sudo apt-get update
+        sudo apt-get upgrade  
+    fi
 
     dpkg -l | grep python3-pip  # check if python3-pip is installed
     if [ $? == 0 ]; then
@@ -45,7 +48,7 @@ function installing(){ # install python3-pip, curl, bs4 and so on
     pipinstall $? bs4 
     python3 -c 'import requests'# check if requests is insatlled
     pipinstall $? requests
-    python3 -c 'flask'          # check if flask is insatlled
+    python3 -c 'import flask'          # check if flask is insatlled
     pipinstall $? flask
 }
 
