@@ -13,10 +13,10 @@ def upload_file():
    if request.method == 'POST':
       f = request.files['file']
              #해당 위치에 경로 수정 필요
-      if f.endswith('.txt'):
-         f.save("../upload/" + secure_filename(f.filename))
+      if f.filename.endswith('.txt'):
+         f.save("upload/" + secure_filename(f.filename))
          
-      return app.route('/')
+      return render_template('index.htm')
 		
 if __name__ == '__main__':
    app.run(debug = True)

@@ -34,7 +34,7 @@
         <form action="/" method="POST" class="col-12">
           <div class="form-group">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="url" id="crawlusrl">
+              <input type="text" class="form-control" placeholder="url" id="crawlusrl" name="url">
               <div class="input-group-append">
                 <input class="btn btn-dark" type="submit" value="Submit">
               </div>
@@ -43,10 +43,10 @@
         </form>
         <!--form with file upload-->
         <h4>Crawl with file</h4>
-        <form action="/upload" method="POST" class="col-12">
+        <form action="/upload" method="POST" class="col-12"  enctype="multipart/form-data">
           <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon04" accept=".txt">
+              <input type="file" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon04" accept=".txt" name="file">
               <label class="custom-file-label" for="fle">Choose file</label>
             </div>
             <div class="input-group-append">
