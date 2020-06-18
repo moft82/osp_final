@@ -19,7 +19,7 @@
     <div class='container'>
       <div class="row">
         <div class="col-12">
-          <h1 style="text-align: center;"> WEB CRAWLER</h1>
+          <h1 style="text-align: center;">WEB CRAWLER</h1>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <div class="row">
         <!--form with url-->
         <h4>Crawl with url</h4>
-        <form action="/" method="POST" class="col-12">
+        <form action="/url" method="POST" class="col-12">
           <div class="form-group">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="url" id="crawlusrl" name="url">
@@ -76,36 +76,43 @@
                 <th scope="col">top 3 urls</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>htttp://adfafadsfads</td>
-                <td>5000</td>
-                <td>2525</td>
-                <td>
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      words
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <span class="dropdown-item">Action</span>
-                    </div>
+            {% for i in res %}
+            
+            <tr>
+              <th scope="row">1</th>
+              {% for key, value in i.items() %}
+              <td>{{ value }}</td>
+              {% endfor %}
+              <td>{{r}}</td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    words
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <span class="dropdown-item">Action</span>
                   </div>
-                </td>
+                </div>
+              </td>
 
-                <td>
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      links
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a href="#" class="dropdown-item">Action</a>
-                    </div>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    links
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="#" class="dropdown-item">Action</a>
                   </div>
-                </td>
-              </tr>
+                </div>
+              </td>
+            </tr>
+            <br>
+            {% endfor %}
+            <tbody>
+              
+
             </tbody>
           </table>
         </div>
