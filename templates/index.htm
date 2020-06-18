@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="OSP team 10">
+  <meta name="description" content="crawl and analyze">
+  <title>웹페이지 분석기</title>
+  <!--css-->
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/font-awesome5.8.2.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+  <!--header-->
+  <header>
+    <div class='container'>
+      <div class="row">
+        <div class="col-12">
+          <h1 style="text-align: center;"> WEB CRAWLER</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!--section for uplpoad-->
+  <section>
+    <div class="container">
+      <div class="row">
+        <!--form with url-->
+        <h4>Crawl with url</h4>
+        <form action="/" method="POST" class="col-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="url" id="crawlusrl">
+              <div class="input-group-append">
+                <button class="input-group-text" type="submit">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--form with file upload-->
+        <h4>Crawl with file</h4>
+        <form action="/upload" method="POST" class="col-12">
+          <div class="input-group is-invalid">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile" required>
+              <label class="custom-file-label" for="validatedInputGroupCustomFile">Choose file...</label>
+            </div>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <!--section for result-->
+  <section>
+    <div class="container">
+      <div class="row">
+        <h3>Result</h3>
+        <hr>
+        <br>
+        <div class="col-12">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">url</th>
+                <th scope="col">word count</th>
+                <th scope="col">runtime</th>
+                <th scope="col">top 10 words</th>
+                <th scope="col">top 3 urls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>htttp://adfafadsfads</td>
+                <td>5000</td>
+                <td>2525</td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      words
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <span class="dropdown-item">Action</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      links
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a href="#" class="dropdown-item">Action</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!--modals-->
+</body>
+<!-- js-->
+<script src="../static/js/jquery-3.4.1.min.js"></script>
+<!--JQuery have to be forward of bootstrap-->
+<script src="../static/js/bootstrap.bundle.min.js"></script>
+<!--If you don't link pepper.js, you have to use bundle-->
+<script src="../static/js/default.js"></script>
+
+</html>

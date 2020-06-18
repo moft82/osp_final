@@ -50,6 +50,8 @@ function installing(){ # install python3-pip, curl, bs4 and so on
     pipinstall $? requests
     python3 -c 'import flask'          # check if flask is insatlled
     pipinstall $? flask
+    python3 -c 'import wrkzeug'          # check if flask is insatlled
+    pipinstall $? werkzeug
 }
 
 function pipinstall(){ # check if module is installed

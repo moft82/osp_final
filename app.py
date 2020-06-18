@@ -6,7 +6,7 @@ app = Flask(__name__)
 #메인 html
 @app.route('/')
 def mainpage():
-    return render_template('main.htm')
+    return render_template('index.htm')
 
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload_file():

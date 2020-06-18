@@ -1,0 +1,18 @@
+/**********************************************
+OSP TEAM 10 CSS 
+
+TABLE OF CSS
+1. Genarl
+***********************************************/
+
+/**********************************************
+1. General
+***********************************************/
+body {
+    background: url('../images/1.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    padding-top: 3em;
+  }
