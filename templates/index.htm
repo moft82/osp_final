@@ -44,13 +44,13 @@
         <!--form with file upload-->
         <h4>Crawl with file</h4>
         <form action="/upload" method="POST" class="col-12">
-          <div class="input-group is-invalid">
+          <div class="input-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile" required>
-              <label class="custom-file-label" for="validatedInputGroupCustomFile">Choose file...</label>
+              <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" accept=".txt">
+              <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
             </div>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">submit</button>
+              <input class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" value="submit">
             </div>
           </div>
         </form>
@@ -121,5 +121,10 @@
 <script src="../static/js/bootstrap.bundle.min.js"></script>
 <!--If you don't link pepper.js, you have to use bundle-->
 <script src="../static/js/default.js"></script>
-
+<script type="application/javascript">
+  $('input[type="file"]').change(function(e){
+      var fileName = e.target.files[0].name;
+      $('.custom-file-label').html(fileName);
+  });
+</script>
 </html>
