@@ -34,32 +34,26 @@ def upload_file():
       url=i.rstrip("\n")   #url 개행문자제거
       res = requests.get(url)
       soup = BeautifulSoup(res.content, "html.parser")
-      html_contents=soup.select('body')
-      words=[]
+      html_contents=re.sub('<.+?>', ' ', str(soup.select('body'))).strip().lower()
       word=[]
       Dic=Counter()
       w=[]
       f=[]
-      
-      
-      for j in html_contents:
-         words=j.get_text().split()
-      for j in words:
-         word.append(re.sub('[^0-9a-zA-Zㄱ-힗]', '', j)) #number,english, 한글만 남기기
-      
+      word=re.sub('[^0-9a-zA-Zㄱ-힗]', ' ', html_contents).split
       word=[v for v in word if v] # list 빈값제거
-      
+
+      print(word)
       for j in word: 
          Dic[j]+=1
          
       for word, freq in Dic.items():
          w.append(word)
          f.append(freq)
-      count=len(w)
+         
       dic={
          "url":url,
-         # "word":w,
-         "count":count
+         "word":w,
+         "count":len(w)
       }
       result.append(dic)
    return render_template('index.htm',res=result, r=1540)      
