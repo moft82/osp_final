@@ -49,7 +49,7 @@ def compute_idf():
             idf_d[t]=math.log10(Dval/cnt)
     return idf_d
 
-    process_new_sentence("this is a good day to study what happend to your study plan today you need more study")
+process_new_sentence("this is a good day to study what happend to your study plan today you need more study")
 process_new_sentence("i need a coffee but coffee is bad for your health")
 process_new_sentence("my cat jumped off the car today")
 process_new_sentence("let's study together at the cafe")

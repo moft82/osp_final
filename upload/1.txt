@@ -1,0 +1,2 @@
+The subject of Knowledge Discovery and Data Mining concerns the extraction of useful information from data. 
+Since this is also the essence of many subareas of computer science, as well as the field of statistics, KDD can be said to lie at the intersection of statistics, machine learning, data bases, pattern recognition, information retrieval and artificial intelligence.
