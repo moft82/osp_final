@@ -80,10 +80,9 @@
             
             <tr>
               <th scope="row">1</th>
-              {% for key, value in i.items() %}
-              <td>{{ value }}</td>
-              {% endfor %}
-              <td>{{r}}</td>
+              <td>{{ i["url"] }}</td>
+              <td>{{ i["word_count"] }}</td>
+              <td>{{ i["runtime"] }}</td>
               <td>
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -91,7 +90,9 @@
                     words
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <span class="dropdown-item">Action</span>
+                    {% for j in i["top10"] %}
+                    <span class="dropdown-item">{{ j }}</span>
+                    {% endfor %}
                   </div>
                 </div>
               </td>
@@ -103,7 +104,9 @@
                     links
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="#" class="dropdown-item">Action</a>
+                    {% for j in i["top3"] %}
+                    <a href="#" class="dropdown-item">{{ j }}</a>
+                    {% endfor %}
                   </div>
                 </div>
               </td>
