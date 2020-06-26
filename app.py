@@ -92,6 +92,9 @@ def crawling(url):
       contents.append(html_contents)
       counts = len(word) # word count in one crawl
       runtime = time.time() - start
+      print(counts)
+      print(runtime)
+
 
 def insertData(url,word_count,runtime): #엘라스틱 서치에 데이터 저장
       body = {
