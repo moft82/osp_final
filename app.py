@@ -4,13 +4,13 @@ import requests
 import re
 import nltk
 import numpy as np
+import math
 from collections import Counter
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-
 
 app = Flask(__name__)
 
@@ -22,6 +22,21 @@ def mainpage():
 def url():
     return render_template('index.htm')
 
+
+def compute_tf(s):
+   bow = set()
+    # dictionary for words in the given sentence (document)
+   w_d = {}
+   tokenized = word_tokenize(s)
+   for tok in tokenized:
+      if tok not in w_d.keys():
+         w_d[tok]=0
+      w_d[tok] += 1
+      bow.add(tok)
+   tf_d = {}
+   for word, count in w_d.items():
+      tf_d[word]=count/len(bow)
+   return tf_d
 
 @app.route('/upload', methods = ['POST']) # with txt file
 def upload_file(): 
@@ -41,6 +56,7 @@ def upload_file():
          if w not in word_d.keys():
             word_d[w]=0
          word_d+=1
+
    def make_vector(i): #str(html_contents)
       v=[]
       tokenized=word_tokenize(i)
@@ -51,6 +67,19 @@ def upload_file():
                val+=1
          v.append(val)
       return v
+
+   def compute_idf():
+      Dval = len(contents)
+      idf_d = {}
+      for w in word_d.keys():
+         cnt = 0
+         for s in contents:
+               if w in word_tokenize(s):
+                  cnt += 1
+               idf_d[w]=math.log10(Dval/cnt)
+      return idf_d
+      
+   
 
    directory="upload"
    # es_host='127.0.0.1'
@@ -79,61 +108,31 @@ def upload_file():
       makeWordDic(html_contents)
       counts=len(word) # word count in one crawl
       contents.append(html_contents)
-      print(word)
 
    for c in contents:
       vectors.append(make_vector(c))
    dotpro=[]
    cos=[]
-   for i in range(len(relist)):
-      for j in range(len(relist)): # len(relist)
+   for i in range(0, len(relist)):
+      for j in range(0, len(relist)): # len(relist)
             dotpro[i].append(np.dot(vectors[i],vectors[j]))
-   for i in range(len(relist)):
-      for j in range(len(relist)):
+   for i in range(0, len(relist)):
+      for j in range(0, len(relist)):
             cos[i].append(dotpro[i][j]/np.linalg.norm(vectors[i])*np.linalg.norm(vectors[j]))
-      
+   
+
+   idf_d=compute_idf()
+   dic={}
+   top10={}
+   for i in range(0,len(contents)):
+      tf_d = compute_tf(contents[i])
+      for word, tf in tf_d.items():
+         dic[word]=tf*idf_d[word]
+      sortlist=sorted(dic.items(), key=lambda x: x[1], reverse=True)
+      top10[i]=sortlist.key[:10]
+
+
    return render_template('index.htm',res=result, r=1540)      
 		
 if __name__ == '__main__':
    app.run(debug = True)
-
-###########################################################
-def compute_tf(s):
-    bow = set()
-    # dictionary for words in the given sentence (document)
-    wordcount_d = {}
-    tokenized = word_tokenize(s)
-    for tok in tokenized:
-        if tok not in wordcount_d.keys():
-            wordcount_d[tok]=0
-        wordcount_d[tok] += 1
-        bow.add(tok)
-    tf_d = {}
-    for word, count in wordcount_d.items():
-        tf_d[word]=count/len(bow)
-
-    return tf_d
-
-def compute_idf():
-    Dval = len(sent_list)
-    # build set of words
-    bow = set()
-    for i in range(0,len(sent_list)):
-        tokenized = word_tokenize(sent_list[i])
-        for tok in tokenized:
-            bow.add(tok)
-    idf_d = {}
-    for t in bow:
-        cnt = 0
-        for s in sent_list:
-            if t in word_tokenize(s):
-                cnt += 1
-            idf_d[t]=math.log10(Dval/cnt)
-    return idf_d
-
-idf_d = compute_idf()
-for i in range(0,len(sent_list)):
-    tf_d = compute_tf(sent_list[i])
-    for word,tfval in tf_d.items():
-        print(word, tfval*idf_d[word])
-##########################################################################
