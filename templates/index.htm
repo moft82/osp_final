@@ -8,7 +8,7 @@
   <meta name="description" content="crawl and analyze">
   <title>웹페이지 분석기</title>
   <!--css-->
-  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
   <link rel="stylesheet" href="../static/css/font-awesome5.8.2.css">
   <link rel="stylesheet" href="../static/css/style.css">
 </head>
@@ -58,7 +58,7 @@
     </div>
   </section>
   <!--section for result-->
-  <section>
+  <section style="margin-top:1.5em;">
     <div class="container">
       <div class="row">
         <h3>Result</h3>
@@ -68,10 +68,10 @@
           <table class="table">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">#</th>
                 <th scope="col">url</th>
+                <th scope="col">result</th>
                 <th scope="col">word count</th>
-                <th scope="col">runtime</th>
+                <th scope="col">runtime(s)</th>
                 <th scope="col">top 10 words</th>
                 <th scope="col">top 3 urls</th>
               </tr>
@@ -79,8 +79,8 @@
             <tbody>
             {% for i in data %}
             <tr>
-              <th scope="row">1</th>
-              <td>{{ i["url"] }}</td>
+              <td><a href={{ i["url"] }} target="_blank">{{ i["url"] }}</a></td>
+              <td>{{ i["execution"] }}</td>
               <td>{{ i["word_count"] }}</td>
               <td>{{ i["runtime"] }}</td>
               <td>
@@ -105,7 +105,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {% for j in i["top3"] %}
-                    <a href="#" class="dropdown-item">{{ j }}</a>
+                    <a href= {{ j }} class="dropdown-item" target="_blank">{{ j }}</a>
                     {% endfor %}
                   </div>
                 </div>
@@ -114,8 +114,8 @@
             {% endfor %}
             {% for i in fail %}
             <tr>
-              <th scope="row">1</th>
-              <td>{{ i["url"] }}({{ i["execution"]}})</td>
+              <td>{{ i["url"] }}</td>
+              <td>{{ i["execution"] }}</td>
               <td>N/A</td>
               <td>N/A</td>
               <td>

@@ -1,12 +1,6 @@
 #! /usr/bin/pyhton
-import os
-import requests
-import re
-import time
-import nltk
-import math
+import os, requests, re, time, nltk, math
 import numpy as np
-from collections import Counter
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
@@ -105,17 +99,46 @@ def computeTfidf():
             top10.append(j["word"])
         i["top10"]=top10
 
+def makeIndex(es, index_name):
+    if es.indices.exists(index=index_name):
+        es.indices.delete(index=index_name)
+        es.indices.create(index=index_name)
+
+def insertData(es, index_name): #엘라스틱 서치에 데이터 저장
+    if len(datalist) == 1:
+        for i in range(0, len(datalist)):
+            body = {
+                'url' : datalist[i]["url"],
+                'execution' : datalist[i]["execution"],
+                'word_count' : datalist[i]["word_count"],
+                'runtime' : datalist[i]["url"]
+            }
+            res=es.index(index = index_name, id = i+1, body = body)
+    else:
+        for i in range(0, len(datalist)):
+            body = {
+                'url' : datalist[i]["url"],
+                'execution' : datalist[i]["execution"],
+                'word_count' : datalist[i]["word_count"],
+                'runtime' : datalist[i]["runtime"],
+                'top3' : datalist[i]["top3"],
+                'top10' : datalist[i]["top10"]
+            }
+            res = es.index(index = index_name, id = i+1, body = body)
+
 def crawling(url):
     global datalist
     word=[]
     data_d={}
-    startTime = time.time()
+    startTime=time.time()
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'html.parser')
     runtime = time.time()-startTime
     html_contents = re.sub('<.+?>', ' ', str(soup.select('body'))).strip().lower()
     html_contents = re.sub('[^0-9a-zA-Zㄱ-힗]', ' ', html_contents)
-    for w in word_tokenize(html_contents):                      #eliminate stopwords in cotents
+    count=len([v for v in html_contents.split() if v]) 
+    startTime = time.time()
+    for w in word_tokenize(html_contents):                      
         if w not in stoplist:
            word.append(w)
     word = [v for v in word if v]
@@ -123,7 +146,7 @@ def crawling(url):
     data_d["url"] = url
     data_d["execution"] = 'success'
     data_d["runtime"] = runtime
-    data_d["word_count"] = len([v for v in html_contents.split() if v]) # delete ' '
+    data_d["word_count"] = count
     data_d["contents"] = word
     datalist.append(data_d)
 
@@ -135,6 +158,9 @@ word_count = []
 datalist = []
 faillist = []
 urllist=[]
+es_host='127.0.0.1'
+es_port='9200'
+es = Elasticsearch([{'host':es_host, 'port':es_port}], timeout=30)
 stoplist = list(stopwords.words("english"))
 urls=open("upload/123.txt",mode='r',encoding='utf8')
 
@@ -155,7 +181,7 @@ for f in urls.readlines():
         urllist.append(url)
     except:
         data_d["url"] = url
-        data_d["execution"] = "fail"
+        data_d["execution"] = "fail(malformed)"
         faillist.append(data_d)
         urllist.append(url)
     else:
@@ -172,7 +198,8 @@ for i in datalist:
    
 computeCos()
 computeTfidf()
-
+makeIndex(es, "crawling")
+insertData(es, "crawling")
 for f in datalist:
     print("url : {}".format(f["url"]))
     print("excution : {}".format(f["execution"]))
