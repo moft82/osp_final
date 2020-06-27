@@ -76,8 +76,8 @@
                 <th scope="col">top 3 urls</th>
               </tr>
             </thead>
-            {% for i in res %}
-            
+            <tbody>
+            {% for i in data %}
             <tr>
               <th scope="row">1</th>
               <td>{{ i["url"] }}</td>
@@ -111,11 +111,32 @@
                 </div>
               </td>
             </tr>
-            <br>
             {% endfor %}
-            <tbody>
-              
+            {% for i in fail %}
+            <tr>
+              <th scope="row">1</th>
+              <td>{{ i["url"] }}({{ i["execution"]}})</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    N/A
+                  </button>
+                </div>
+              </td>
 
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    N/A
+                  </button>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>

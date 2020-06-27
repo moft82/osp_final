@@ -28,7 +28,7 @@ function installing(){ # install python3-pip, curl, bs4 and so on
         sudo apt-get upgrade  
     fi
 
-    dpkg -l | grep python3-pip  # check if python3-pip is installed
+    dpkg -l | grep python3-pip          # check if python3-pip is installed
     if [ $? == 0 ]; then
         echo "python3-pip is already installed"
     else
@@ -36,7 +36,7 @@ function installing(){ # install python3-pip, curl, bs4 and so on
         sudo apt-get install python3-pip
     fi
 
-    dpkg -l | grep curl         # check if curl is installed
+    dpkg -l | grep curl                 # check if curl is installed
     if [ $? == 0 ]; then
         echo "crul is already installed"
     else
@@ -44,20 +44,24 @@ function installing(){ # install python3-pip, curl, bs4 and so on
         sudo apt install curl
     fi
 
-    python3 -c 'import bs4'     # check if bs4 is insatlled
+    python3 -c 'import bs4'             # check if bs4 is insatlled
     pipinstall $? bs4 
-    python3 -c 'import requests'# check if requests is insatlled
+    python3 -c 'import requests'        # check if requests is insatlled
     pipinstall $? requests
-    python3 -c 'import flask'          # check if flask is insatlled
+    python3 -c 'import flask'           # check if flask is insatlled
     pipinstall $? flask
-    python3 -c 'import wrkzeug'          # check if wrkzeug is insatlled
+    python3 -c 'import wrkzeug'         # check if wrkzeug is insatlled
     pipinstall $? werkzeug
-    python3 -c 'import nltk'          # check if nltk is insatlled
+    python3 -c 'import nltk'            # check if nltk is insatlled
     pipinstall $? nltk
-    python3 setting.py
+    python3 -c 'import numpy'           # check if numpy is insatlled
+    pipinstall $? nltk
+    python3 -c 'import elasticsearch'   # check if elasticsearch is insatlled
+    pipinstall $? elasticsearch
+    python3 setting.py                  # downloading nltk, nltk.download("") through setting.py
 }
 
-function pipinstall(){ # check if module is installed
+function pipinstall(){
     if [ $1 == 0 ]; then
         echo "$2 is already installed"
     else
@@ -75,8 +79,8 @@ function installelasticsearch(){ # install elasticsearch tar file and unzip
 }
 
 function servicestart(){ # run elasticsearch and flask
-    echo "run elasticsearch in background..."
-    ./elasticsearch-7.6.2/bin/elasticsearch -d
+    # echo "run elasticsearch in background..."
+    # ./elasticsearch-7.6.2/bin/elasticsearch -d
     echo "run flask..."
     run flask
 }
@@ -99,9 +103,3 @@ fi
 
 installing
 mvfiles
-
-# to do list
-# gathering files in zipped file.(if there are files under dir in zip file)
-
-# comment here
-#
